@@ -12,7 +12,8 @@ package holamundo2;
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-import java.util.Date;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 /**
  *
@@ -22,9 +23,11 @@ public class Person {
 
     private final String name;
     private final String surname;
-    private final Date birthday;
+    private final Calendar birthday;
+    private long MILESECOND_PER_YEAR;
 
-    public Person(String name, String surname, Date birthday) {
+    public Person(String name, String surname, Calendar birthday) {
+        this.MILESECOND_PER_YEAR = (long) (1000 * 60 * 60 * 24 * 365.25);
         this.name = name;
         this.surname = surname;
         this.birthday = birthday;
@@ -38,17 +41,23 @@ public class Person {
         return surname;
     }
 
-    public Date getBirthday() {
+    public Calendar getBirthday() {
         return birthday;
     }
 
     public String getFullName() {
         return name + " " + surname;
     }
-    public int getAge(){
-        Date today;
-        today = new Date();
-                
-        return (int) ((today.getTime()-birthday.getTime())/(1000*60*60*24*365.25));
+
+    public int getAge() {
+        Calendar today;
+        today = GregorianCalendar.getInstance();
+        
+
+        return (int) (today.getTimeInMillis() - birthday.getTimeInMillis());
+
+    }
+    private long getmillis (long milli){
+       return milli/MILESECOND_PER_YEAR;
     }
 }
